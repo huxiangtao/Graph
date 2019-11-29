@@ -1,0 +1,23 @@
+{
+  "name": "graph",
+  "version": "1.0.0",
+  "description": "just for test",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/huxiangtao/Graph.git"
+  },
+  "author": "huxt",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/huxiangtao/Graph/issues"
+  },
+  "homepage": "https://github.com/huxiangtao/Graph#readme",
+  "dependencies": {
+    "cytoscape": "^3.12.1",
+    "tippy.js": "^5.1.2"
+  }
+}
