@@ -11,7 +11,10 @@ const cy = (window.cy = cytoscape({
         "text-valign": "bottom",
         "text-halign": "center",
         "font-size": "8px",
+        'border-width': 2,
         'background-fit': 'cover',
+        "background-color": "#eee",
+        "border-color": "#666"
       }
     },
     {
@@ -19,7 +22,9 @@ const cy = (window.cy = cytoscape({
       css: {
         padding: "4px",
         "text-valign": "top",
-        "text-halign": "center"
+        "text-halign": "center",
+        "background-color": "#666",
+        "background-opacity": 0.5
       }
     },
     {
@@ -27,21 +32,26 @@ const cy = (window.cy = cytoscape({
       css: {
         label: "data(data)",
         "curve-style": "straight",
+        "line-height": "12px",
+        "line-cap": "square",
         "target-arrow-shape": "triangle",
         "font-size": "8px",
-        width: "1px"
+        "text-margin-y": -6,
+        width: "1.5px"
       }
     },
     {
       selector: ".elliot",
       css: {
-        "line-color": "red"
+        "line-color": "red",
+        "target-arrow-color": "red"
       }
     },
     {
       selector: "#a",
       css: {
-        'background-image': 'https://live.staticflickr.com/3866/14420309584_78bf471658_b.jpg'
+        'background-image': 'https://live.staticflickr.com/3866/14420309584_78bf471658_b.jpg',
+        'background-fit': 'cover',
       }
     }
   ],
@@ -60,7 +70,7 @@ const cy = (window.cy = cytoscape({
       { data: { id: "d", alias: "asdasafad4" }, position: { x: 215, y: 175 } },
       { data: { id: "e", alias: "域2" } },
       {
-        data: { id: "f", alias: "asdasafad6", parent: "e" },
+        data: { id: "f", alias: "asdasafad6" },
         position: { x: 300, y: 175 }
       }
     ],
@@ -69,7 +79,8 @@ const cy = (window.cy = cytoscape({
         data: { id: "ab", data: "0.01s/100/1/100%", source: "a", target: "d" }
       },
       { data: { id: "ec", data: "0.01s/100/1/95%", source: "e", target: "c" } },
-      { data: { id: "ac", data: "0.01s/100/1/95%", source: "a", target: "c" } }
+      { data: { id: "ac", data: "0.01s/100/1/95%", source: "a", target: "c" } },
+      { data: { id: "fa", data: "0.01s/100/1/95%", source: "f", target: "a" } }
     ]
   },
 
@@ -90,7 +101,7 @@ function makeTippy(node, html) {
     arrow: true,
     placement: "bottom",
     hideOnClick: true,
-    distance: -30,
+    distance: -50,
     interactive: false
   }).tooltips[0];
 }
@@ -174,7 +185,7 @@ cy.edges().forEach(n => {
     const edgeCenterPos = n.midpoint();
     const deltaXPos = Math.abs(eventPos.x - edgeCenterPos.x);
     const deltaYPos = Math.abs(eventPos.y - edgeCenterPos.y);
-    if (deltaXPos < 9 && deltaYPos < 9) {
+    if (deltaXPos < 9 && deltaYPos < 18) {
       tippy.show();
     }
     n.addClass("elliot");
