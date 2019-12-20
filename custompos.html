@@ -2,15 +2,16 @@
 <!-- This code is for demonstration purposes only.  You should not hotlink to Github, Rawgit, or files from the Cytoscape.js documentation in your production apps. -->
 <html>
 <head>
-<link href="style.css" rel="stylesheet" />
 <meta charset=utf-8 />
 <meta name="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui">
 <title>Compound nodes</title>
 <link rel="stylesheet" href="./css/test.css">
 <script src="https://unpkg.com/webcola@3.3.8/WebCola/cola.min.js"></script>
 <script src="https://unpkg.com/popper.js@1.14.4/dist/umd/popper.js"></script>
-<script src="https://unpkg.com/tippy.js@2.6.0/dist/tippy.all.js"></script>
+<script src="https://unpkg.com/tippy.js@4.0.1/umd/index.all.min.js"></script>
 <script src="./node_modules/cytoscape/dist/cytoscape.min.js"></script>
+<script src="https://unpkg.com/dagre@0.7.4/dist/dagre.js"></script>
+<script src="./node_modules/cytoscape-dagre/cytoscape-dagre.js"></script>
 <script src="https://unpkg.com/cytoscape-cola@2.2.3/cytoscape-cola.js"></script>
 <script src="https://unpkg.com/cytoscape-popper@1.0.2/cytoscape-popper.js"></script>
 <script src="./js/loadsh.js"></script>
@@ -26,10 +27,12 @@
   left: 0;
   top: 0;
 }
+
 </style>
 </head>
 <body>
 <div id="cy"></div>
+<p>数据图例：平均响应时间/请求总数/错误数/请求成功率</p>
 <!-- Load application code at the end to ensure DOM is loaded -->
 <script src="./js/code.js"></script>
 </body>

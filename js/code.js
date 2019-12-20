@@ -1,63 +1,106 @@
-const cy = (window.cy = cytoscape({
-  container: document.getElementById("cy"),
+window.onload = function() {
+  run();
+  console.log(window.cy.$('#a'), 'elliot13-')
+      setTimeout(() => {
+        window.cy.fit(window.cy.$('#a'))
+      }, 0);
+  
+};
 
-  boxSelectionEnabled: false,
-
-  style: [
-    {
-      selector: "node",
-      css: {
-        label: "data(alias)",
-        "text-valign": "bottom",
-        "text-halign": "center",
-        "font-size": "8px",
-        'border-width': 2,
-        'background-fit': 'cover',
-        "background-color": "#eee",
-        "border-color": "#666"
-      }
-    },
-    {
-      selector: ":parent",
-      css: {
-        padding: "4px",
-        "text-valign": "top",
-        "text-halign": "center",
-        "background-color": "#666",
-        "background-opacity": 0.5
-      }
-    },
-    {
-      selector: "edge",
-      css: {
-        label: "data(data)",
-        "curve-style": "straight",
-        "line-height": "12px",
-        "line-cap": "square",
-        "target-arrow-shape": "triangle",
-        "font-size": "8px",
-        "text-margin-y": -6,
-        width: "1.5px"
-      }
-    },
-    {
-      selector: ".elliot",
-      css: {
-        "line-color": "red",
-        "target-arrow-color": "red"
-      }
-    },
-    {
-      selector: "#a",
-      css: {
-        'background-image': 'https://live.staticflickr.com/3866/14420309584_78bf471658_b.jpg',
-        'background-fit': 'cover',
-      }
-    }
-  ],
-
-  elements: {
-    nodes: [
+function getRandomInt(min, max) {
+  return Math.random() * (max - min) + min; 
+}
+function run(elements) {
+  if (window.cy && window.cy.destroy) {
+    hideAllTippies();
+  }
+  let dir = 1;
+  const cy = (window.cy = cytoscape({
+    container: document.getElementById("cy"),
+  
+    boxSelectionEnabled: false,
+  
+    style: [
+      {
+        selector: "node",
+        css: {
+          label: "data(alias)",
+          "text-valign": "bottom",
+          "text-halign": "center",
+          "font-size": "8px",
+          'border-width': 1.8,
+          'text-wrap': 'wrap',
+          'text-max-width': '1px',
+          'text-overflow-wrap': '\n',
+          'background-fit': 'cover',
+          "background-color": "#eee",
+          "border-color": "#666"
+        }
+      },
+      {
+        selector: ":parent",
+        css: {
+          padding: "4px",
+          "text-valign": "top",
+          "text-halign": "center",
+          "background-color": "#666",
+          "background-opacity": 0.2
+        }
+      },
+      {
+        selector: "edge",
+        css: {
+          label: "data(data)",
+          "curve-style": "straight",
+          "line-height": "8px",
+          "line-color": "#AAAAAA",
+          "target-arrow-color": "#AAAAAA",
+          "line-cap": "square",
+          "color": "#000",
+          "text-opacity": "0.6",
+          "target-arrow-shape": "triangle",
+          "font-size": "8px",
+          "text-margin-y": '-6',
+          width: "1.5px"
+        }
+      },
+      {
+        selector: ".hoverText",
+        css: {
+          "color": '#1AB394',
+          "line-height": "8px",
+          "font-size": "8px",
+          "text-margin-y": '-6'
+        }
+      },
+      {
+        selector: ".elliot",
+        css: {
+          "line-color": "#6B6B6B",
+          "target-arrow-color": "#6B6B6B"
+        }
+      },
+      {
+        selector: ".warn",
+        css: {
+          "line-color": "#EDC341",
+          "target-arrow-color": "#EDC341"
+        }
+      },
+      {
+        selector: ".error",
+        css: {
+          "line-color": "#CD5051",
+          "target-arrow-color": "#CD5051"
+        }
+      },
+      {
+        selector: ".warn-hover",
+        css: {
+          "line-color": "#C9A537",
+          "target-arrow-color": "#C9A537"
+        }
+      },
       {
         data: { id: "a", alias: "asdasafad1", parent: "b" },
         position: { x: 215, y: 85 }
@@ -74,23 +117,89 @@ const cy = (window.cy = cytoscape({
         position: { x: 300, y: 175 }
       }
     ],
-    edges: [
-      {
-        data: { id: "ab", data: "0.01s/100/1/100%", source: "a", target: "d" }
+  
+    elements: {
+      nodes: [
+        { data: { id: "e", alias: "app4", next: 'c', index: 5 } },
+        {
+          data: { id: "a", alias: "app1-asdsasd-adfdsfsdf-adasads", next: ['c', 'd'], pre:'f', parent: "b", key: true, index: 1 },
+        },
+        {
+          data: { id: "c", alias: "app2", parent: "b", pre:['a', 'e'], index: 3 },
+        },
+        { data: { id: "b", alias: "域1", type: 'parent', index: 2 } },
+        { data: { id: "d", alias: "app3", pre: 'a', index: 4 } },
+        
+        {
+          data: { id: "f", alias: "app5", next:'a', index: 6 },
+        }
+      ],
+      edges: [
+        { data: { id: "ad", data: "0.01s/100/1/100%", source: "a", target: "d", mid: "g" , warn: true}  },
+        { data: { id: "ec", data: "0.01s/100/1/95%", source: "e", target: "c", mid: "h", error: true } },
+        { data: { id: "ac", data: "0.01s/100/1/95%", source: "a", target: "c", mid: "i" } },
+        { data: { id: "fa", data: "0.01s/100/1/95%", source: "f", target: "a", mid: "j" } }
+      ]
+    },
+  
+    layout: {
+      name: "cola",
+      flow: {axis: 'x', minSeparation: 50},
+      avoidOverlap: true,
+      handleDisconnected: true,
+      alignment:(node) => {
+        console.log(node.data('next'), 'asdas');
+        const index = node.data('index');
+        const next = ['c', 'd'];
+        const pre = [];
+        if (node.data('id') === 'e') {
+          return { x: 0, y: 0 };
+        } else {
+          dir = dir === 1 ? -1 : 1;
+          return {x:node.data('index') * dir * getRandomInt(12,20) * 1.5, y:node.data('index') * dir * getRandomInt(2, 14)} 
+        }
       },
-      { data: { id: "ec", data: "0.01s/100/1/95%", source: "e", target: "c" } },
-      { data: { id: "ac", data: "0.01s/100/1/95%", source: "a", target: "c" } },
-      { data: { id: "fa", data: "0.01s/100/1/95%", source: "f", target: "a" } }
-    ]
-  },
-
-  layout: {
-    name: "cola",
-    nodeSpacing: 50,
-    edgeLengthVal: 45,
-    animate: true,
-    randomize: false,
-    maxSimulationTime: 1500
+      nodeSpacing: 50,
+      edgeLengthVal: 45,
+      animate: true,
+      userConstIter: 20,
+      randomize: false,
+      maxSimulationTime: 1500
+    }
+  }));
+  
+  function makeTippy(node, html, distance, placement) {
+    return tippy(node.popperRef(), {
+      content: html,
+      trigger: "manual",
+      arrow: true,
+      placement,
+      hideOnClick: true,
+      distance,
+      interactive: false
+    });
+  }
+  
+  function createTip(tag, attrs, children) {
+    const el = document.createElement(tag);
+  
+    Object.keys(attrs).forEach(function(key) {
+      const val = attrs[key];
+      el.setAttribute(key, val);
+    });
+  
+    if (children) {
+      children.forEach(function(child) {
+        el.appendChild(child);
+      });
+    }
+  
+    return el;
+  }
+  
+  function createText(text) {
+    const el = document.createTextNode(text);
+    return el;
   }
 }));
 

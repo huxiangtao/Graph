@@ -18,6 +18,10 @@
   "homepage": "https://github.com/huxiangtao/Graph#readme",
   "dependencies": {
     "cytoscape": "^3.12.1",
-    "tippy.js": "^5.1.2"
+    "cytoscape-cola": "^2.3.0",
+    "cytoscape-popper": "^1.0.4",
+    "loadsh": "^0.0.4",
+    "tippy.js": "^5.1.2",
+    "webcola": "^3.4.0"
   }
 }
