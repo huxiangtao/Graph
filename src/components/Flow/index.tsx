@@ -6,6 +6,7 @@ import SideBar from '@/internalComponents/sideBar';
 import { merge } from 'lodash';
 import behaviorManager from '@/common/behaviorManager';
 import './shape/nodes/flowNode';
+import './shape/edges/flowEdge';
 import './behavior/dragAddEdge';
 import './behavior/dragAddNode';
 
@@ -14,7 +15,7 @@ interface FlowProps {
   enableSideBar?: boolean;
   width: number;
   height: number;
-  data: GraphData;
+  data?: GraphData;
 }
 
 interface FlowState {
@@ -47,15 +48,6 @@ class Flow extends React.Component<FlowProps, FlowState> {
         'brush-select': 'brush-select',
         'zoom-canvas': 'zoom-canvas',
         'drag-node': 'drag-node',
-        // tooltip: {
-        //   type: 'tooltip',
-        //   formatText(model: any) {
-        //     // 提示框文本内容
-        //     const text =
-        //       'label: ' + model.label + '<br/> class: ' + model.class;
-        //     return text;
-        //   },
-        // },
       },
     };
 
@@ -76,7 +68,7 @@ class Flow extends React.Component<FlowProps, FlowState> {
       ...graphConfig,
     });
 
-    this.graph.data(data);
+    data && this.graph.data(data);
     this.graph.render();
     return this.graph;
   };

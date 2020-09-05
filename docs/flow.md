@@ -59,9 +59,7 @@ const linkData = {
   ],
 };
 
-export default () => (
-  <Flow data={linkData} enableSideBar height={500} width={700} />
-);
+export default () => <Flow enableSideBar height={500} width={700} />;
 ```
 
 More skills for writing demo: https://d.umijs.org/guide/demo-principle

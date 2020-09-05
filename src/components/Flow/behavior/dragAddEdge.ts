@@ -26,7 +26,7 @@ interface DragAddEdgeBehavior {
 const dragAddEdgeBehavior: Behavior = {
   getDefaultCfg(): DefaultConfig {
     return {
-      edgeType: 'bizFlowEdge',
+      edgeType: 'flowEdge',
     };
   },
   getEvents() {
@@ -66,7 +66,7 @@ const dragAddEdgeBehavior: Behavior = {
     }
   },
   handleNodeMouseDown(e: any) {
-    const { graph } = this;
+    const { graph, edgeType } = this;
     const { target, item } = e;
     const sourceNode = e.item as Node;
     const sourceNodeId = sourceNode.getModel().id;
@@ -75,7 +75,7 @@ const dragAddEdgeBehavior: Behavior = {
     if (target.get('name') === 'anchorPoint') {
       const model: any = {
         id: guid(),
-        type: 'polyline',
+        type: edgeType,
         source: sourceNodeId,
         sourceAnchor: sourceAnchorPointIndex,
         target: {
@@ -84,14 +84,13 @@ const dragAddEdgeBehavior: Behavior = {
         } as any,
       };
       this.edge = graph?.addItem('edge', model);
+      graph?.getNodes().forEach(targetNode => {
+        if (targetNode.getModel().id === sourceNodeId) {
+          return;
+        }
+        graph.setItemState(targetNode, ItemState.ActiveAnchorPoints, true);
+      });
     }
-
-    graph?.getNodes().forEach(targetNode => {
-      if (targetNode.getModel().id === sourceNodeId) {
-        return;
-      }
-      graph.setItemState(targetNode, ItemState.ActiveAnchorPoints, true);
-    });
   },
 
   isEnabledAnchorPoint(e: any) {
@@ -160,6 +159,10 @@ const dragAddEdgeBehavior: Behavior = {
     if (!this.shouldAddRealEdge()) {
       graph?.removeItem(this.edge);
     }
+
+    graph?.getNodes().forEach(targetNode => {
+      graph.setItemState(targetNode, ItemState.ActiveAnchorPoints, false);
+    });
 
     this.edge = null;
   },
