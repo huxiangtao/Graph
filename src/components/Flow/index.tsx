@@ -2,8 +2,9 @@ import React from 'react';
 import { GraphOptions, GraphData } from '@antv/g6/lib/types';
 import G6 from '@antv/g6';
 import { Graph } from '@antv/g6';
-import SideBar from '@/internalComponents/sideBar';
+import SideBar from '@/privateComponents/sideBar';
 import { merge } from 'lodash';
+import BasicGraph from '@/core/BasicGraph';
 import behaviorManager from '@/common/behaviorManager';
 import './shape/nodes/flowNode';
 import './shape/edges/flowEdge';
@@ -33,11 +34,6 @@ class Flow extends React.Component<FlowProps, FlowState> {
 
   graph: Graph | null = null;
 
-  componentDidMount() {
-    this.graph = this.initGraph();
-    this.graph.setMode('default');
-  }
-
   initGraph = () => {
     const { graphConfig, data, width, height } = this.props;
     const grid = new G6.Grid();
@@ -53,7 +49,7 @@ class Flow extends React.Component<FlowProps, FlowState> {
 
     const modes = merge(defaultModes, behaviorManager.getRegisteredBehaviors());
 
-    this.graph = new G6.Graph({
+    return new G6.Graph({
       container: 'mountNode',
       width,
       height,
@@ -67,32 +63,22 @@ class Flow extends React.Component<FlowProps, FlowState> {
       plugins: [grid, minimap],
       ...graphConfig,
     });
-
-    data && this.graph.data(data);
-    this.graph.render();
-    return this.graph;
   };
 
-  onCheckPoint = (flag: boolean) => {
-    if (flag && this.graph) {
-      this.graph.setMode('addNode');
-    } else if (!flag && this.graph) {
-      this.graph.setMode('default');
-    }
-  };
+  // onCheckPoint = (flag: boolean) => {
+  //   if (flag && this.graph) {
+  //     this.graph.setMode('addNode');
+  //   } else if (!flag && this.graph) {
+  //     this.graph.setMode('default');
+  //   }
+  // };
 
   render() {
     const { enableSideBar, height } = this.props;
     return (
       <div id="Flow" style={{ display: 'flex' }}>
-        {enableSideBar && (
-          <SideBar
-            height={height}
-            onCheckPoint={this.onCheckPoint}
-            graph={this.graph}
-          />
-        )}
-        <div id="mountNode" style={{ position: 'relative' }}></div>
+        {enableSideBar && <SideBar height={height} />}
+        <BasicGraph containerId="mountNode" initGraph={this.initGraph} />
       </div>
     );
   }

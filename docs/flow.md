@@ -4,7 +4,7 @@ Demo:
 
 ```tsx
 import React from 'react';
-import { Flow } from 'Graph';
+import GraphWrapper, { Flow } from 'Graph';
 
 const linkData = {
   nodes: [
@@ -59,7 +59,11 @@ const linkData = {
   ],
 };
 
-export default () => <Flow enableSideBar height={500} width={700} />;
+export default () => (
+  <GraphWrapper>
+    <Flow enableSideBar height={500} width={700} />
+  </GraphWrapper>
+);
 ```
 
 More skills for writing demo: https://d.umijs.org/guide/demo-principle

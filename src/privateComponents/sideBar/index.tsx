@@ -1,13 +1,16 @@
 import React from 'react';
 import SideItem from './sideItem';
 import { map, merge, clone, includes } from 'lodash';
-import { Graph } from '@antv/g6';
 import { convertObjToString } from '@/utils';
+import { GraphContext } from '@/core/GraphContext';
 
-interface SideBarProps {
+interface SideBarWithContextProps {
   height: number;
-  graph: Graph | null;
-  onCheckPoint: (n: boolean) => void;
+  setMode(mode: string): void;
+}
+
+interface SideBarProps extends Partial<SideBarWithContextProps> {
+  height: number;
 }
 
 interface SideBarState {}
@@ -19,8 +22,8 @@ while (len > 0) {
   len--;
 }
 
-class SideBar extends React.Component<SideBarProps, SideBarState> {
-  constructor(props: SideBarProps) {
+class SideBar extends React.Component<SideBarWithContextProps, SideBarState> {
+  constructor(props: SideBarWithContextProps) {
     super(props);
     this.movePanelRef = React.createRef();
     this.movePanelStyle = {
@@ -84,7 +87,6 @@ class SideBar extends React.Component<SideBarProps, SideBarState> {
     this.updateMovePanelStyle({
       visibility: 'hidden',
     });
-    const { onCheckPoint } = this.props;
     // 当元素被真正拖出菜单后，才会切换模式
     // if (this.itemX >= 120) {
     //   console.log('checkPoint');
@@ -92,6 +94,12 @@ class SideBar extends React.Component<SideBarProps, SideBarState> {
     // } else {
     //   onCheckPoint(false);
     // }
+  };
+
+  onCheckPoint = (flag: boolean) => {
+    if (flag && this.props.setMode) {
+      this.props.setMode('addNode');
+    }
   };
 
   onMouseUp = (e: any) => {
@@ -120,7 +128,7 @@ class SideBar extends React.Component<SideBarProps, SideBarState> {
               <SideItem
                 key={item.name}
                 name={item.name}
-                onCheckPoint={this.props.onCheckPoint}
+                onCheckPoint={this.onCheckPoint}
                 age={item.age}
                 onItemSelect={this.onItemSelect}
                 onMouseUp={this.onMouseUp}
@@ -153,4 +161,10 @@ class SideBar extends React.Component<SideBarProps, SideBarState> {
   }
 }
 
-export default SideBar;
+export default (props: SideBarProps) => {
+  return (
+    <GraphContext.Consumer>
+      {context => <SideBar {...props} {...context} />}
+    </GraphContext.Consumer>
+  );
+};
