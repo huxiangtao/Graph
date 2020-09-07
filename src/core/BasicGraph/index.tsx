@@ -6,11 +6,13 @@ interface BasicGraphWithContextProps {
   containerId: string;
   initGraph(): Graph;
   setGraph(graph: Graph): void;
+  data?: any;
 }
 
 interface BasicGraphProps extends Partial<BasicGraphWithContextProps> {
   containerId: string;
   initGraph(): Graph;
+  data?: any;
 }
 
 interface BasicGraphState {}
@@ -19,13 +21,15 @@ class BasicGraph extends React.Component<
   BasicGraphWithContextProps,
   BasicGraphState
 > {
-  graph: Graph | null = null;
   componentDidMount() {
-    const { initGraph, setGraph } = this.props;
-    this.graph = initGraph();
-    this.graph.render();
-    this.graph.setMode('default');
-    setGraph && setGraph(this.graph);
+    const { initGraph, setGraph, data } = this.props;
+    const graph = initGraph();
+    if (data) {
+      graph.data(data);
+    }
+    graph.render();
+    graph.setMode('default');
+    setGraph && setGraph(graph);
   }
   render() {
     const { containerId } = this.props;

@@ -150,7 +150,7 @@ class SideBar extends React.Component<SideBarWithContextProps, SideBarState> {
                 height,
                 width: '180px',
                 position: 'absolute',
-                background: 'red',
+                //background: 'red',
                 opacity: 0.4,
               }}
             ></div>

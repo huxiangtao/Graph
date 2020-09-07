@@ -43,8 +43,6 @@ const flowEdge: any = {
 
     const { style, stateStyles } = this.options;
 
-    console.log(style, stateStyles, 'sadas');
-
     const stateStyle = stateStyles[name];
 
     if (!stateStyle) {

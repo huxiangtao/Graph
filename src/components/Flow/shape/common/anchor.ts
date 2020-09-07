@@ -17,11 +17,12 @@ const getAnchorPointDefaultStyle: GetAnchorPointStyle = (item, anchorPoint) => {
 
   return {
     x: width * x,
-    y: height * y - 3,
+    y: height * y,
     r: 3,
     lineWidth: 2,
     fill: '#FFFFFF',
     stroke: '#5AAAFF',
+    cursor: 'crosshair',
   };
 };
 
@@ -29,7 +30,6 @@ function drawAnchorPoints(this: AnchorPointContextProps, item: Node) {
   const group = item.getContainer();
   const model = item.getModel() as NodeModel;
   const anchorPoints = this.getAnchorPoints ? this.getAnchorPoints(model) : [];
-  const anchorPointsState = item.get('anchorPointsState') || [];
 
   forEach(anchorPoints, (anchorPoint, index) => {
     group.addShape('circle', {

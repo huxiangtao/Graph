@@ -9,6 +9,7 @@ import behaviorManager from '@/common/behaviorManager';
 import './shape/nodes/flowNode';
 import './shape/edges/flowEdge';
 import './behavior/dragAddEdge';
+import './behavior/nodeClick';
 import './behavior/dragAddNode';
 
 interface FlowProps {
@@ -74,11 +75,15 @@ class Flow extends React.Component<FlowProps, FlowState> {
   // };
 
   render() {
-    const { enableSideBar, height } = this.props;
+    const { enableSideBar, height, data } = this.props;
     return (
       <div id="Flow" style={{ display: 'flex' }}>
         {enableSideBar && <SideBar height={height} />}
-        <BasicGraph containerId="mountNode" initGraph={this.initGraph} />
+        <BasicGraph
+          containerId="mountNode"
+          initGraph={this.initGraph}
+          data={data}
+        />
       </div>
     );
   }

@@ -39,10 +39,10 @@ const dragAddNodeBehavior: Behavior = {
 
       this.curShape = group.addShape('rect', {
         attrs: {
-          x: e.x - 60,
-          y: e.y - 30,
-          width: 120,
-          height: 60,
+          x: e.x - 81,
+          y: e.y - 47,
+          width: 162,
+          height: 94,
           fill: '#f3f9ff',
           fillOpacity: 0.5,
           stroke: '#1890ff',
@@ -58,8 +58,8 @@ const dragAddNodeBehavior: Behavior = {
     const { graph } = this;
     if (graph) {
       this.curShape.attr({
-        x: e.x - 60,
-        y: e.y - 30,
+        x: e.x - 81,
+        y: e.y - 47,
       });
       graph.paint();
     }
@@ -72,7 +72,7 @@ const dragAddNodeBehavior: Behavior = {
       const id = Date.now().toString();
       const model = {
         id,
-        label: 'node',
+        label: `node_${id}`,
         type: 'flowNode',
         x: e.x - width / 2,
         y: e.y - height / 2,

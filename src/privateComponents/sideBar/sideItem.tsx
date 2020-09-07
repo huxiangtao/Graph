@@ -30,14 +30,15 @@ class SideItem extends React.Component<SideItemProps, SideItemState> {
       .then((dataUrl: any) => {
         const img = new Image();
         const elem = document.createElement('div');
-        //img.src = dataUrl;
+        img.src = dataUrl;
         const styleObj = {};
         elem.setAttribute(
           'style',
-          `position: absolute;z-index: 1000;top: 10px; left: 20px;left: ${x}px; top: ${y}px; width: 90px; height: 30px;display: block; background: green; z-index: 10000;`,
+          `position: absolute;z-index: 1000;top: 10px; left: 20px;left: ${x}px; top: ${y}px; width: 90px; height: 30px;display: block; z-index: 10000;`,
         );
         elem.setAttribute('id', 'dragImg');
         document.getElementById('move-panel')?.prepend(elem);
+        elem.appendChild(img);
       })
       .catch(function(error: any) {
         console.error('oops, something went wrong!', error);
